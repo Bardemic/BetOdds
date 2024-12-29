@@ -12,10 +12,10 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return "yo chat we in the home doma"
+    return "yo chat we in the home domain"
 
 @app.route('/prizepicks-api-fetch') #Scrapes Prizepicks Data
-def index2():
+def prizepicks_api_fetch():
     return prizepicks_api_fetch()
 
 @app.route('/prizepicks-api-data-send') #Gets Stored, Cleaned, Combined Data
