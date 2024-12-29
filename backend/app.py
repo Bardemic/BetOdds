@@ -12,20 +12,18 @@ CORS(app)
 
 
 global data_1
-global data_2
-data_1 = {} #we likey, /stored-data to see
-data_2 = {} #ignore for now
+data_1 = {}
 global pp_data
 global pp_data_bet_objs
 pp_data = []
-pp_data_bet_objs = []
+pp_data_bet_objs = [] #Stores the data, but in the Bet class format
 final_data = []
 
 @app.route('/')
 def index():
-    return "HI"
+    return "yo chat we in the home domain"
 
-@app.route('/prizepicks-api-fetch')
+@app.route('/prizepicks-api-fetch') #
 def prizepicks_api_fetch():
     global pp_data
     global data_1
@@ -144,14 +142,15 @@ def prizepicks_api_fetch():
         return jsonify(data)
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
-@app.route('/prizepicks-api-data-send')
+
+@app.route('/prizepicks-api-data-send') #Gets Stored, Cleaned, Combined Data
 def prizepicks_api_data_send():
     global pp_data
     return jsonify(pp_data)
 
 
-@app.route('/api-data')
-def get_api_data():
+@app.route('/scrape-propcash-data') #Scrapes PropCash Data
+def scrape_propcash_data():
     global data_1
     
     API_URL = os.getenv('API_URL_1')
@@ -174,37 +173,12 @@ def get_api_data():
     except requests.RequestException as e:
         return jsonify({"error": str(e)}), 500
     
-@app.route('/api-data-2') #kinda useless now
-def get_api_bet_odds():
-    global data_2
-
-    API_URL = os.getenv('API_URL_2')
-    API_KEY = os.getenv('API_KEY')
     
-    headers = {
-        "Authorization": f"Bearer {API_KEY}",
-        "Content-Type": "application/json"
-    }
-
-    try:
-        response = requests.get(API_URL, headers=headers)
-        print(response)
-        response.raise_for_status()
-        data = response.json()
-        data_2 = data
-        return jsonify(data)
-    except requests.RequestException as e:
-        return jsonify({"error": str(e)}), 500
-    
-@app.route('/stored-data')
+@app.route('/propcash-data') #Gets stored PropsCash data
 def get_stored_data():
     global data_1
     return jsonify(data_1)
 
-@app.route('/stored-data-2')
-def get_stored_data_2():
-    global data_2
-    return jsonify(data_2)
 
 @app.route('/final-data-api')
 def final_data_api():
