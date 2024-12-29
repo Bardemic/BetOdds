@@ -30,5 +30,4 @@ def scrape_propcash_data():
         return jsonify({"error": str(e)}), 500
 
 def get_data_1():
-
     return data_1

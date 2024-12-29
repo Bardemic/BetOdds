@@ -3,6 +3,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from scrapePrizePicks import prizepicks_api_fetch, get_final_data, get_pp_data
 from scrapePropsCash import scrape_propcash_data, get_data_1
+from checkBest import bestBets
 
 load_dotenv()
 
@@ -15,7 +16,7 @@ def index():
     return "yo chat we in the home domain"
 
 @app.route('/prizepicks-api-fetch') #Scrapes Prizepicks Data
-def prizepicks_api_fetch():
+def prizepicks_api_fetch_data():
     return prizepicks_api_fetch()
 
 @app.route('/prizepicks-api-data-send') #Gets Stored, Cleaned, Combined Data
@@ -35,6 +36,10 @@ def get_stored_data():
 @app.route('/final-data-api')
 def final_data_api():
     return jsonify(get_final_data())
+
+@app.route('/get-best-lines')
+def get_best_lines():
+    return jsonify(bestBets())
 
 if(__name__ == "__main__"):
     app.run(debug = True, port=5000)
