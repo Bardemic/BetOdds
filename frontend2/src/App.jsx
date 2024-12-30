@@ -6,42 +6,24 @@ const App = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/stored-data');
+      const response = await fetch('http://127.0.0.1:5000/get-best-lines');
       const data = await response.json();
-      const response2 = await fetch('http://127.0.0.1:5000/stored-data-2');
-      const data2 = await response2.json();
       
-      const combinedData = data.map((item, index) => ({
-        ...item,
-        projections: data2[index]?.projection || {}
+      const combinedData = data.map(item => ({
+        ...item
       }));
 
-      
+      console.log(data)
       setResult(combinedData);
     } catch (error) {
       setResult('Error: ' + error.message);
     }
   };
 
-  const eligible = (stats) => {
-    if(!stats) return false;
-    if(!stats.l10Rate && !stats.vsOpp & !stats.currentSeason) return false;
-    if(!stats.vsOpp){
-      if(stats.l10Rate >= 65 && stats.currentSeason >= 65) return (stats.l10Rate + stats.currentSeason) / 2;
-      if(stats.l10Rate <= 35 && stats.currentSeason <= 35) return (stats.l10Rate + stats.currentSeason) / 2;
-      return false;
-    }
-    //return true;
-    if(stats?.l10Rate >= 60 && stats?.vsOpp >= 60 && stats?.currentSeason >= 60) return (stats.l10Rate + stats.vsOpp + stats.currentSeason) / 3;
-    if(stats?.l10Rate <= 40 && stats?.vsOpp <= 40 && stats?.currentSeason <= 40) return (stats.l10Rate + stats.vsOpp + stats.currentSeason) / 3;
-    if((stats?.vsOpp >= 65) && (stats?.l10Rate >= 65 || stats?.currentSeason >= 65)) return (stats.vsOpp + Math.max(stats.l10Rate, stats.currentSeason)) / 2;
-    if((stats?.vsOpp <= 35) && (stats?.l10Rate <= 35 || stats?.currentSeason <= 35)) return (stats.vsOpp + Math.min(stats.l10Rate, stats.currentSeason)) / 2;
-    return false
-  }
 
   useEffect(() => {
-    
-  }, [setResult]);
+    fetchData()
+  }, []);
 
   return (
     <div className="bg-gray-100 min-h-screen w-screen">
@@ -95,17 +77,16 @@ const App = () => {
 
         </div>
         <div className='flex flex-col'>
-          {result ? result.map((item, index) => (
-            eligible(item[statType]) && 
-            <div key={index} className="p-4 bg-white rounded text-black shadow border grid gap-2 grid-cols-7">
-              <p>{item.name}</p>
-              <p>{item[statType]?.l10Rate}</p>
-              <p>{item[statType]?.vsOpp}</p>
-              <p>{item[statType]?.currentSeason}</p>
-              <p>{eligible(item[statType]).toFixed(2)}</p>
-              <p>{item.projections[statType]?.books.find(odds_ => odds_.book === "PrizePicks")?.underPrice}</p>
-              <p>{item.projections[statType]?.books.find(odds_ => odds_.book === "PrizePicks")?.overPrice}</p>
-            </div>
+          {result ? result.map((item, index) => ( 
+            <>
+              {item.projection_type == statType && <div key={index} className="p-4 bg-white rounded text-black shadow border grid gap-2 grid-cols-7">
+                <p>{item.player_name}</p>
+                <p>{item.l10}</p>
+                <p>{item.H2H}</p>
+                <p>{item["Current Season"]}</p>
+                <p>{item.Average}</p>
+              </div>}
+            </>
           )) : null}
         </div>
       </div>

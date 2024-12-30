@@ -15,7 +15,9 @@ final_data_bet_objs = []
 
 def prizepicks_api_fetch():
     global pp_data
+    global pp_data_bet_objs
     global final_data
+    global final_data_bet_objs
     data_1 = get_data_1()
     
     
@@ -36,6 +38,10 @@ def prizepicks_api_fetch():
         #return data
         #return jsonify(data["data"])
         
+        pp_data = []
+        pp_data_bet_objs = []
+        final_data = []
+        final_data_bet_objs
         for bet in data["data"]:
             for player in data["included"]:
                 #return jsonify({"1": player["id"], "2": bet["relationships"]["new_player"]["data"]["id"]})
@@ -63,4 +69,5 @@ def get_pp_data_bet_objs():
 def get_final_data():
     return final_data
 def get_final_data_bet_objs():
+    global final_data_bet_objs
     return final_data_bet_objs

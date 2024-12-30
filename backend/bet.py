@@ -4,6 +4,8 @@ class Bet:
         self.line = line
         self.new_player_id = new_player_id
         self.og_projection_type = projection_type
+        self.over =  None
+        self.under = None
         self.l10 = None
         self.h2h = None
         self.in2024 = None

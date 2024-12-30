@@ -8,6 +8,7 @@ data_1 = {}
 
 def scrape_propcash_data():
     global data_1
+    data_1 = {}
     
     API_URL = os.getenv('API_URL_1')
     API_KEY = os.getenv('API_KEY')

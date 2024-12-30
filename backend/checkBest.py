@@ -6,6 +6,8 @@ best = []
 best_bet_objs = []
 def bestBets():
     bets = get_final_data_bet_objs()
+    best = []
+    best_bet_objs = []
     for bet in bets:
         noneCount = 0
         if bet.l10 == None: noneCount += 1
