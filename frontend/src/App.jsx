@@ -6,7 +6,7 @@ const App = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/get-best-lines');
+      const response = await fetch(`${process.env.BACKEND_URL}/get-best-lines`);
       const data = await response.json();
       
       const combinedData = data.map(item => ({

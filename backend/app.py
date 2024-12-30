@@ -12,8 +12,8 @@ CORS(app)
 
 
 @app.route('/')
-def index():
-    return "yo chat we in the home domain"
+async def index():
+    return "yo chat we in the home domain (running all functions)"
 
 @app.route('/prizepicks-api-fetch') #Scrapes Prizepicks Data
 def prizepicks_api_fetch_data():
@@ -42,4 +42,4 @@ def get_best_lines():
     return jsonify(bestBets())
 
 if(__name__ == "__main__"):
-    app.run(debug = True, port=5000)
+    app.run(port=5001, host="0.0.0.0")

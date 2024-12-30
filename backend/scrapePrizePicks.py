@@ -3,6 +3,7 @@ import os
 from flask import jsonify
 from scrapePropsCash import get_data_1
 from bet import Bet
+from fake_useragent import UserAgent
 
 global pp_data
 global pp_data_bet_objs
@@ -19,19 +20,28 @@ def prizepicks_api_fetch():
     global final_data
     global final_data_bet_objs
     data_1 = get_data_1()
-    
+    ua = UserAgent()
+
+
+
     
     headers = {
+        #'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
+        #'sec-ch-ua-mobile': '?0',
+        'X-Device-ID': '1a9d6304-65f3-4304-8523-ccf458d3c0c4',
+        #'sec-ch-ua-platform': '"macOS"',
         "Content-Type": "application/json",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-         "cookie": os.getenv('COOKIE'),
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
         "referer": "https://www.prizepicks.com/",
     }
 
 
     try:
-        response = requests.get("https://api.prizepicks.com/projections?league_id=9&per_page=250&single_stat=true&in_game=true&state_code=IL&game_mode=pickem", headers=headers)
+        response = requests.get(
+            "https://api.prizepicks.com/projections?league_id=9&per_page=250&single_stat=true&in_game=true&state_code=IL&game_mode=pickem",
+            headers=headers,
+        )
         print(response)
         response.raise_for_status()
         data = response.json()
