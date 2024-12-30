@@ -84,7 +84,9 @@ const App = () => {
                 <p>{item.l10}</p>
                 <p>{item.H2H}</p>
                 <p>{item["Current Season"]}</p>
-                <p>{item.Average}</p>
+                <p>{item.Average.toFixed(3)}</p>
+                <p>{item.under}</p>
+                <p>{item.over}</p>
               </div>}
             </>
           )) : null}

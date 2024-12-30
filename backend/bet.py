@@ -68,14 +68,40 @@ class Bet:
                 self.projection_type = "NA"
 
     def to_dict(self):
-        return { "player_name": self.player_name, "line": self.line, "new_player_id": self.new_player_id, "projection_type": self.projection_type,}
+        return {
+            "player_name": self.player_name,
+            "line": self.line,
+            "new_player_id":self.new_player_id,
+            "projection_type": self.projection_type,
+        }
     def to_dict_final(self):
-        return { "player_name": self.player_name, "line": self.line, "new_player_id": self.new_player_id, "projection_type": self.projection_type, "l10": self.l10, "H2H": self.h2h, "Current Season": self.in2024,}
+        return {
+            "player_name": self.player_name,
+            "line": self.line,
+            "new_player_id": self.new_player_id,
+            "projection_type": self.projection_type,
+            "l10": self.l10,
+            "H2H": self.h2h,
+            "Current Season": self.in2024
+        }
     def to_dict_final_with_avg(self):
-        return { "player_name": self.player_name, "line": self.line, "new_player_id": self.new_player_id, "projection_type": self.projection_type, "l10": self.l10, "H2H": self.h2h, "Current Season": self.in2024, "Average": self.avg}
-    def set_info(self, l10Rate, H2H, in2024):
+        return {
+            "player_name": self.player_name,
+            "line": self.line, 
+            "new_player_id": self.new_player_id, 
+            "projection_type": self.projection_type, 
+            "l10": self.l10, 
+            "H2H": self.h2h, 
+            "Current Season": self.in2024,
+            "Average": self.avg,
+            "under": self.under,
+            "over": self.over
+            }
+    def set_info(self, l10Rate, H2H, in2024, under, over):
         self.l10 = l10Rate
         self.h2h = H2H
         self.in2024 = in2024
+        self.under = under
+        self.over = over
     def set_avg(self, avg):
         self.avg = avg

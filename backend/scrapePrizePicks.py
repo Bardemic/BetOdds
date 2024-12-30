@@ -55,7 +55,13 @@ def prizepicks_api_fetch():
             #return prize_pick_bet.player_name 
             if prize_pick_bet.player_name in data_1.keys():
                 if prize_pick_bet.projection_type in data_1[prize_pick_bet.player_name].keys(): #I should DEFFO clean this up tbh
-                   prize_pick_bet.set_info(data_1[prize_pick_bet.player_name][prize_pick_bet.projection_type]["l10Rate"], data_1[prize_pick_bet.player_name][prize_pick_bet.projection_type]["vsOpp"], data_1[prize_pick_bet.player_name][prize_pick_bet.projection_type]["currentSeason"])#l10, h2h, in2024
+                   prize_pick_bet.set_info(
+                        data_1[prize_pick_bet.player_name][prize_pick_bet.projection_type]["l10Rate"],
+                        data_1[prize_pick_bet.player_name][prize_pick_bet.projection_type]["vsOpp"],
+                        data_1[prize_pick_bet.player_name][prize_pick_bet.projection_type]["currentSeason"],
+                        data_1[prize_pick_bet.player_name][prize_pick_bet.projection_type]["under"],
+                        data_1[prize_pick_bet.player_name][prize_pick_bet.projection_type]["over"]
+                    )#l10, h2h, in2024
                    final_data.append(prize_pick_bet.to_dict_final())
                    final_data_bet_objs.append(prize_pick_bet)
         return jsonify(data)
