@@ -22,9 +22,6 @@ services:
       - traefik.enable=true
       - "traefik.http.routers.<unique_router_name>.rule=Host(`coolify.io`) && PathPrefix(`/`)"
       - traefik.http.routers.<unique_router_name>.entryPoints=http
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     depends_on:
       - backend
     networks:
@@ -39,8 +36,6 @@ services:
     environment:
       - API_KEY=${API_KEY}
       - API_URL_1=${API_URL_1}
-    volumes:
-      - ./backend:/app
     ports:
       - "5001:5001"
     networks:
