@@ -22,6 +22,8 @@ services:
       - traefik.enable=true
       - "traefik.http.routers.<unique_router_name>.rule=Host(`coolify.io`) && PathPrefix(`/`)"
       - traefik.http.routers.<unique_router_name>.entryPoints=http
+    environment:
+      - VITE_BACKEND_URL=${VITE_BACKEND_URL}
     depends_on:
       - backend
     networks:
