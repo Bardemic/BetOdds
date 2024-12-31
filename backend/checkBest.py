@@ -5,6 +5,8 @@ global best_bet_objs
 best = []
 best_bet_objs = []
 def bestBets():
+    global best
+    global best_bet_objs
     bets = get_final_data_bet_objs()
     best = []
     best_bet_objs = []
@@ -16,19 +18,19 @@ def bestBets():
         if noneCount == 3:
             continue
         if bet.h2h == None and bet.l10 != None and bet.in2024 != None:
-            if bet.l10 >= 65 and bet.in2024 >= 65:
+            if bet.l10 >= 70 and bet.in2024 >= 70:
                 bet.set_avg((bet.l10 + bet.in2024) / 2)
-            elif bet.l10 <= 35 and bet.in2024 <= 35:
+            elif bet.l10 <= 30 and bet.in2024 <= 30:
                 bet.set_avg((bet.l10 + bet.in2024) / 2)
         elif noneCount == 0:
-            if (bet.l10 >= 60 and bet.in2024 >= 60 and bet.h2h >= 60) or (bet.l10 <= 40 and bet.in2024 <= 40 and bet.h2h <= 40):
+            if (bet.l10 >= 64 and bet.in2024 >= 64 and bet.h2h >= 64) or (bet.l10 <= 36 and bet.in2024 <= 36 and bet.h2h <= 36):
                 bet.set_avg((bet.l10 + bet.in2024 + bet.h2h) / 3)
-            elif (bet.h2h >= 65) and (bet.l10 >= 65 or bet.in2024 >= 65):
+            elif (bet.h2h >= 70) and (bet.l10 >= 70 or bet.in2024 >= 70):
                 if bet.l10 >= bet.in2024:
                     bet.set_avg((bet.l10 + bet.h2h) / 2)
                 else:
                     bet.set_avg((bet.l10 + bet.in2024) / 2)
-            elif (bet.h2h <= 35) and (bet.l10 <= 35 or bet.in2024 <= 35):
+            elif (bet.h2h <= 30) and (bet.l10 <= 30 or bet.in2024 <= 30):
                 if bet.l10 <= bet.in2024:
                     bet.set_avg((bet.l10 + bet.h2h) / 2)
                 else:

@@ -7,6 +7,7 @@ global data_1
 data_1 = {}
 
 def scrape_propcash_data():
+    print("scrape_propcash_data")
     global data_1
     data_1 = {}
     
@@ -32,3 +33,6 @@ def scrape_propcash_data():
 
 def get_data_1():
     return data_1
+def reset_variables_pc():
+    global data_1
+    data_1 = {}

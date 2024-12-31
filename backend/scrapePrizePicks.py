@@ -6,21 +6,26 @@ from selenium.webdriver.common.by import By
 from flask import jsonify
 from scrapePropsCash import get_data_1
 from bet import Bet
+from datetime import datetime
 
 global pp_data
 global pp_data_bet_objs
 global final_data_bet_objs
 global final_data
+global last_updated
 pp_data = []
 pp_data_bet_objs = [] #Stores the data, but in the Bet class format
 final_data = []
 final_data_bet_objs = []
+last_updated = datetime(2000, 1, 1, 1, 1, 1, 1)
 
 def prizepicks_api_fetch():
+    print("prizepicks_api_fetch ran")
     global pp_data
     global pp_data_bet_objs
     global final_data
     global final_data_bet_objs
+    global last_updated
     data_1 = get_data_1()
 
     options = Options() #using selenium vs request because of Prizepick's restrictions, cannot deploy to a docker with requests (and if you could, my 10 hours of trying wasn't enough smh)
@@ -64,6 +69,7 @@ def prizepicks_api_fetch():
                 )#l10, h2h, in2024
                 final_data.append(prize_pick_bet.to_dict_final())
                 final_data_bet_objs.append(prize_pick_bet)
+    last_updated = datetime.now()
     return jsonify(data)
 
 def get_pp_data():
@@ -75,3 +81,26 @@ def get_final_data():
 def get_final_data_bet_objs():
     global final_data_bet_objs
     return final_data_bet_objs
+def get_last_time_updated():
+    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    global last_updated
+    time_table = {
+        "year": last_updated.year,
+        "month": months[last_updated.month - 1],
+        "day": last_updated.day,
+        "hour": last_updated.hour,
+        "minute": last_updated.minute,
+        "second": last_updated.second
+    }
+    return time_table
+
+def reset_variables_pp():
+    global pp_data
+    global pp_data_bet_objs
+    global final_data_bet_objs
+    global final_data
+    pp_data = []
+    pp_data_bet_objs = []
+    final_data_bet_objs = []
+    final_data = []
+

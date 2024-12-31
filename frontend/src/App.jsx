@@ -3,11 +3,17 @@ import React, { useEffect, useState } from 'react';
 const App = () => {
   const [result, setResult] = useState('');
   const [statType, setStatType] = useState('passYards');
+  const [time, setTime] = useState('');
+
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:5001/get-best-lines`);
+      const response = await fetch(`http://localhost:5001/get-best-lines`);
+      const response_time = await fetch(`http://localhost:5001/get-last-updated`);
       const data = await response.json();
+      const response_time_data = await response_time.json();
+
+      setTime(response_time_data);
       
       const combinedData = data.map(item => ({
         ...item
@@ -29,7 +35,7 @@ const App = () => {
     <div className="bg-gray-100 min-h-screen w-screen">
       <div className="w-5/6 mx-auto p-6">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">API Frontend</h1>
-        <div className='m-2 flex gap-2'>
+        <div className='m-2 flex items-center gap-2'>
           <button
             onClick={fetchData}
             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200"
@@ -65,6 +71,7 @@ const App = () => {
             <option value="assists">Ast</option>
             <option value="idk">Sacks (nAn)</option>
           </select>
+          <p className='text-black'>{time.month} {String(time.day).padStart(2, '0')}, {time.year} at {String(time.hour).padStart(2, '0')}:{String(time.minute).padStart(2, '0')}:{String(time.second).padStart(2, '0')} UTC</p>
         </div>
         <div className='p-4 bg-white rounded text-black shadow border grid gap-2 grid-cols-7'>
           <p>Name</p>
