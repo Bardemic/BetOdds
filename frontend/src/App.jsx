@@ -6,7 +6,7 @@ const App = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${process.env.BACKEND_URL}/get-best-lines`);
+      const response = await fetch(`http://127.0.0.1:5001/get-best-lines`);
       const data = await response.json();
       
       const combinedData = data.map(item => ({
@@ -77,19 +77,18 @@ const App = () => {
 
         </div>
         <div className='flex flex-col'>
-          {result ? result.map((item, index) => ( 
-            <>
-              {item.projection_type == statType && <div key={index} className="p-4 bg-white rounded text-black shadow border grid gap-2 grid-cols-7">
-                <p>{item.player_name}</p>
-                <p>{item.l10}</p>
-                <p>{item.H2H}</p>
-                <p>{item["Current Season"]}</p>
-                <p>{item.Average.toFixed(3)}</p>
-                <p>{item.under}</p>
-                <p>{item.over}</p>
-              </div>}
-            </>
-          )) : null}
+          {result ? result.map((item, index) => {
+          if(item.projection_type == statType) return ( 
+            <div key={index} className="p-4 bg-white rounded text-black shadow border grid gap-2 grid-cols-7">
+              <p>{item.player_name}</p>
+              <p>{item.l10}</p>
+              <p>{item.H2H}</p>
+              <p>{item["Current Season"]}</p>
+              <p>{item.Average.toFixed(3)}</p>
+              <p>{item.under}</p>
+              <p>{item.over}</p>
+            </div>
+          )}) : null}
         </div>
       </div>
     </div>

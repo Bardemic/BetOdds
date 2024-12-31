@@ -1,6 +1,19 @@
 version: '3'
 
 services:
+  selenium:
+    container_name: remote_chromedriver
+    image: selenium/standalone-chromium
+    environment:
+      - OTEL_SDK_DISABLED=true
+      - SE_NODE_MAX_SESSIONS=1
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+    ports:
+      - 4444:4444
+    restart: always
+    networks:
+      - selenium-network
+
   frontend:
     build: ./frontend
     ports:
@@ -8,20 +21,22 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    environment:
-      - BACKEND_URL=http://localhost:5001
     depends_on:
       - backend
+    networks:
+      - selenium-network
 
   backend:
     env_file:
       - .env
-    network_mode: "host"
-    dns:
-        - 8.8.8.8
-        - 8.8.4.4
     build: ./backend
     ports:
       - "5001:5001"
     volumes:
       - ./backend:/app
+    networks:
+      - selenium-network 
+      
+networks:
+  selenium-network:
+    driver: bridge

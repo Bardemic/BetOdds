@@ -12,7 +12,7 @@ CORS(app)
 
 
 @app.route('/')
-async def index():
+def index():
     return "yo chat we in the home domain (running all functions)"
 
 @app.route('/prizepicks-api-fetch') #Scrapes Prizepicks Data
