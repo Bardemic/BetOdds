@@ -15,6 +15,10 @@ services:
       - selenium-network
 
   frontend:
+    labels:
+      - traefik.enable=true
+      - "traefik.http.routers.<unique_router_name>.rule=Host(`coolify.io`) && PathPrefix(`/`)"
+      - traefik.http.routers.<unique_router_name>.entryPoints=http
     build: ./frontend
     volumes:
       - ./frontend:/app
@@ -25,10 +29,6 @@ services:
       - selenium-network
 
   backend:
-    labels:
-      - traefik.enable=true
-      - "traefik.http.routers.<unique_router_name>.rule=Host(`coolify.io`) && PathPrefix(`/`)"
-      - traefik.http.routers.<unique_router_name>.entryPoints=http
     env_file:
       - .env
     environment:
