@@ -23,7 +23,7 @@ scheduler.start()
 
         
 
-@scheduler.task('cron', id='do_job_1', minute='0 * * * *')
+@scheduler.task('cron', id='do_job_1', minute='0', hour='*')
 def job1():
     with app.app_context():
         reset_variables_pp()
