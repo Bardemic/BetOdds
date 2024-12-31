@@ -23,7 +23,7 @@ scheduler.start()
 
         
 
-@scheduler.task('interval', id='do_job_1', seconds=5, misfire_grace_time=900)
+@scheduler.task('cron', id='do_job_1', minute='0 * * * *')
 def job1():
     with app.app_context():
         reset_variables_pp()

@@ -29,6 +29,9 @@ services:
   backend:
     env_file:
       - .env
+    environment:
+      - API_KEY=${API_KEY}
+      - API_URL_1=${API_URL_1}
     build: ./backend
     ports:
       - "5001:5001"
@@ -36,7 +39,7 @@ services:
       - ./backend:/app
     networks:
       - selenium-network 
-      
+
 networks:
   selenium-network:
     driver: bridge
