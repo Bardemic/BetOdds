@@ -12,6 +12,7 @@ services:
       - 4444:4444
     restart: always
     networks:
+      - lifeforce-v2
       - selenium-network
 
   frontend:
@@ -25,6 +26,7 @@ services:
     depends_on:
       - backend
     networks:
+      - lifeforce-v2
       - selenium-network
 
   backend:
@@ -39,6 +41,7 @@ services:
     ports:
       - "5001:5001"
     networks:
+      - lifeforce-v2
       - selenium-network 
 
 networks:
