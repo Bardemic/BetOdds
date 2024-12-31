@@ -21,8 +21,8 @@ services:
       - traefik.http.routers.<unique_router_name>.entryPoints=http
     build: ./frontend
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - ./frontend
+      - /node_modules
     depends_on:
       - backend
     networks:
@@ -38,7 +38,8 @@ services:
     ports:
       - "5001:5001"
     volumes:
-      - ./backend:/app
+      - ./backend
+    working_dir: /backend
     networks:
       - selenium-network 
 
