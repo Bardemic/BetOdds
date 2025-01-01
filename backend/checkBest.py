@@ -56,9 +56,9 @@ def bestBets(league):
                 best_nba.append(bet.to_dict_final_with_avg())
                 best_bet_objs_nba.append(bet)
     if league == 9:
-        sorted_best = sorted(best_nfl, key=lambda x: abs(50 - x['Average']))
+        sorted_best = sorted(best_nfl, key=lambda x: abs(50 - x['Average']), reverse=True)
     elif league == 7:
-        sorted_best = sorted(best_nba, key=lambda x: abs(50 - x['Average']))
+        sorted_best = sorted(best_nba, key=lambda x: abs(50 - x['Average']), reverse=True)
     return sorted_best
 
         
