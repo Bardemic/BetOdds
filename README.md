@@ -1,11 +1,12 @@
+# BetOdds
 Scrapes bets from Prizepicks (Sports betting website), uses the data and compares to stats from PropsCash (Stats website), outputs best data to a spreadsheet
 
 Currently using Flask for backend, Vite/React for frontend
 
-##Not Completed
-
-To Do:
-- Create Docker file to make easier to deploy (current instructions not available because no point tbh)
-- Spreadsheet output
-- Fix Files/L API stuff
-- Maybe delete frontend code
+## To Do List (In no order)
+- Fix issue when deploying to Docker Container locally (works when deployed to coolify)
+- Add Basketball stats
+- Add improved filters for sorting data
+- Add data fetch on deployment (currently waits for the hour mark to update data)
+- Improve UI overall, add more information about website
+- Add detailed setup guide
