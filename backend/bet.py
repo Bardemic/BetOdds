@@ -65,7 +65,33 @@ class Bet:
             case "Receiving Yards [Combo]":
                 self.projection_type = "NA"
             case "Shortest FG Made Yds [Combo]":
-                self.projection_type = "NA"
+                self.projection_type = "NA" #Below is NBA
+            case "Pts+Asts":
+                self.projection_type = "pointsAssists"
+            case "Assists":
+                self.projection_type = "assists"
+            case "Blocked Shots":
+                self.projection_type = "blocks"
+            case "Pts+Rebs":
+                self.projection_type = "pointsRebounds"
+            case "Pts+Rebs+Asts":
+                self.projection_type = "pointsReboundsAssists"
+            case "Blks+Stls":
+                self.projection_type = "stealsAndBlocks"
+            case "Points":
+                self.projection_type = "points"
+            case "Rebounds":
+                self.projection_type = "rebounds"
+            case "Rebs+Asts":
+                self.projection_type = "reboundsAssists"
+            case "Steals":
+                self.projection_type = "steals"
+            case "3-PT Made":
+                self.projection_type = "fg3PtMade"#might be wrong
+            case "Turnovers":
+                self.projection_type = "turnovers"
+            
+
 
     def to_dict(self):
         return {
