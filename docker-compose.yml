@@ -15,28 +15,32 @@ services:
       - selenium-network
 
   frontend:
-    build: ./frontend
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    labels:
+      - traefik.enable=true
+      - "traefik.http.routers.<unique_router_name>.rule=Host(`coolify.io`) && PathPrefix(`/`)"
+      - traefik.http.routers.<unique_router_name>.entryPoints=http
+    environment:
+      - VITE_BACKEND_URL=${VITE_BACKEND_URL}
     depends_on:
       - backend
     networks:
       - selenium-network
 
   backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     env_file:
       - .env
     environment:
+      - SELENIUM_LOCATION=${SELENIUM_LOCATION:-remote_chromedriver}
       - API_KEY=${API_KEY}
       - API_URL_1=${API_URL_1}
-    build: ./backend
     ports:
       - "5001:5001"
-    volumes:
-      - ./backend:/app
     networks:
       - selenium-network 
 

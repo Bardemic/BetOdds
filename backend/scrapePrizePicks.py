@@ -28,12 +28,14 @@ def prizepicks_api_fetch():
     global last_updated
     data_1 = get_data_1()
 
+    selenium_address = os.environ.get('SELENIUM_LOCATION')
+
     options = Options() #using selenium vs request because of Prizepick's restrictions, cannot deploy to a docker with requests (and if you could, my 10 hours of trying wasn't enough smh)
     options.add_argument("start-maximized")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
     
-    driver = webdriver.Remote(command_executor='http://remote_chromedriver:4444/wd/hub', options=options)
+    driver = webdriver.Remote(command_executor=f'http://{selenium_address}:4444/wd/hub', options=options)
     driver.set_page_load_timeout(5)
     driver.get("https://api.prizepicks.com/projections?league_id=9&per_page=250&single_stat=true&in_game=true&state_code=IL&game_mode=pickem")
     while driver.execute_script("return document.readyState") != "complete":

@@ -8,8 +8,8 @@ const App = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:5001/get-best-lines`);
-      const response_time = await fetch(`http://localhost:5001/get-last-updated`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/get-best-lines`);
+      const response_time = await fetch(`${import.meta.env.VITE_BACKEND_URL}/get-last-updated`);
       const data = await response.json();
       const response_time_data = await response_time.json();
 
