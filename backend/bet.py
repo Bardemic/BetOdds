@@ -10,6 +10,8 @@ class Bet:
         self.h2h = None
         self.in2024 = None
         self.avg = None
+        self.pc_line = None
+        self.pp_line = None
         self.projection_type = "NA"
         match projection_type:
             case "Rush+Rec TDs":
@@ -121,13 +123,17 @@ class Bet:
             "Current Season": self.in2024,
             "Average": self.avg,
             "under": self.under,
-            "over": self.over
+            "over": self.over,
+            "pp_line": self.pp_line,
+            "pc_line": self.pc_line
             }
-    def set_info(self, l10Rate, H2H, in2024, under, over):
+    def set_info(self, l10Rate, H2H, in2024, under, over, line_pp, line_pc):
         self.l10 = l10Rate
         self.h2h = H2H
         self.in2024 = in2024
         self.under = under
         self.over = over
+        self.pp_line = line_pp
+        self.pc_line = line_pc
     def set_avg(self, avg):
         self.avg = avg

@@ -82,7 +82,9 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL
                     data_[prize_pick_bet.player_name][prize_pick_bet.projection_type]["vsOpp"],
                     data_[prize_pick_bet.player_name][prize_pick_bet.projection_type]["currentSeason"],
                     data_[prize_pick_bet.player_name][prize_pick_bet.projection_type]["under"],
-                    data_[prize_pick_bet.player_name][prize_pick_bet.projection_type]["over"]
+                    data_[prize_pick_bet.player_name][prize_pick_bet.projection_type]["over"],
+                    prize_pick_bet.line,
+                    data_[prize_pick_bet.player_name][prize_pick_bet.projection_type]["line"],
                 )#l10, h2h, in2024
                 if league == 9:
                     final_data_nfl.append(prize_pick_bet.to_dict_final())

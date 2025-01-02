@@ -104,27 +104,29 @@ const App = () => {
           }
           <p className='text-black'>{time.month} {String(time.day).padStart(2, '0')}, {time.year} at {String(time.hour).padStart(2, '0')}:{String(time.minute).padStart(2, '0')}:{String(time.second).padStart(2, '0')} UTC</p>
         </div>
-        <div className='p-4 bg-white rounded text-black shadow border grid gap-2 grid-cols-7'>
+        <div className='p-4 bg-white rounded text-black shadow border grid gap-2 grid-cols-8'>
           <p>Name</p>
           <p>L10</p>
           <p>H2H</p>
           <p>2024</p>
-          <p>Avg.</p>
           <p>Under</p>
           <p>Over</p>
+          <p>Line (PP)</p>
+          <p>Line (PC)</p>
 
         </div>
         <div className='flex flex-col'>
           {activeResult ? (activeResult == "NFL" ? resultNFL : resultNBA).map((item, index) => {
           if(item.projection_type == (activeResult == "NFL" ? statTypeNFL : statTypeNBA)) return ( 
-            <div key={index} className="p-4 bg-white rounded text-black shadow border grid gap-2 grid-cols-7">
+            <div key={index} className="p-4 bg-white rounded text-black shadow border grid gap-2 grid-cols-8">
               <p>{item.player_name}</p>
               <p>{item.l10}</p>
               <p>{item.H2H}</p>
               <p>{item["Current Season"]}</p>
-              <p>{item.Average.toFixed(3)}</p>
               <p>{item.under}</p>
               <p>{item.over}</p>
+              <p>{item.pp_line}</p>
+              <p>{item.pc_line}</p>
             </div>
           )}) : null}
         </div>
