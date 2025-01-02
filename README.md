@@ -4,7 +4,6 @@ Scrapes bets from Prizepicks (Sports betting website), uses the data and compare
 Currently using Flask for backend, Vite/React for frontend
 
 ## To Do List (In no order)
-- Fix issue when deploying to Docker Container locally (works when deployed to coolify)
 - Add improved filters for sorting data
 - Add data fetch on deployment (currently waits for the hour mark to update data)
 - Improve UI overall, add more information about website

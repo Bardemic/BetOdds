@@ -23,7 +23,9 @@ services:
       - "traefik.http.routers.<unique_router_name>.rule=Host(`coolify.io`) && PathPrefix(`/`)"
       - traefik.http.routers.<unique_router_name>.entryPoints=http
     environment:
-      - VITE_BACKEND_URL=${VITE_BACKEND_URL}
+      - VITE_BACKEND_URL=${VITE_BACKEND_URL:-http://localhost:5001}
+    #ports:
+    #  - "5173:5173"  #uncomment this to run locally
     depends_on:
       - backend
     networks:
@@ -33,12 +35,12 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    env_file:
-      - .env
     environment:
       - SELENIUM_LOCATION=${SELENIUM_LOCATION:-remote_chromedriver}
       - API_KEY=${API_KEY}
       - API_URL_1=${API_URL_1}
+    env_file:
+      - ./backend/.env
     ports:
       - "5001:5001"
     networks:
