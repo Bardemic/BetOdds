@@ -4,19 +4,23 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from flask import jsonify
-from scrapePropsCash import get_data_nfl, get_data_nba
+from scrapePropsCash import get_data_nfl, get_data_nba, get_data_nhl
 from bet import Bet
 from datetime import datetime
 
 global pp_data_nfl
 global pp_data_bet_objs_nfl
-global final_data_bet_objs_nfl
 global final_data_nfl
-global last_updated
+global final_data_bet_objs_nfl
 global pp_data_nba
 global pp_data_bet_objs_nba
 global final_data_bet_objs_nba
 global final_data_nba
+global pp_data_nhl
+global pp_data_bet_objs_nhl
+global final_data_nhl
+global final_data_bet_objs_nhl
+global last_updated
 pp_data_nfl = []
 pp_data_bet_objs_nfl = [] #Stores the data, but in the Bet class format
 final_data_nfl = []
@@ -25,9 +29,13 @@ pp_data_nba = []
 pp_data_bet_objs_nba = [] #Stores the data, but in the Bet class format
 final_data_nba = []
 final_data_bet_objs_nba = []
+pp_data_nhl = []
+pp_data_bet_objs_nhl = [] 
+final_data_nhl = []
+final_data_bet_objs_nhl = []
 last_updated = datetime(2000, 1, 1, 1, 1, 1, 1)
 
-def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL
+def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL, #8 is NHL
     print("prizepicks_api_fetch ran")
     global pp_data_nfl
     global pp_data_bet_objs_nfl
@@ -37,9 +45,14 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL
     global pp_data_bet_objs_nba
     global final_data_bet_objs_nba
     global final_data_nba
+    global pp_data_nhl
+    global pp_data_bet_objs_nhl
+    global final_data_nhl
+    global final_data_bet_objs_nhl
     global last_updated
     data_nfl = get_data_nfl()
     data_nba = get_data_nba()
+    data_nhl = get_data_nhl()
 
     selenium_address = os.environ.get('SELENIUM_LOCATION')
 
@@ -67,12 +80,18 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL
                 elif league == 7:
                     pp_data_bet_objs_nba.append(this_bet)
                     pp_data_nba.append(this_bet.to_dict())
+                elif league == 8:
+                    pp_data_bet_objs_nhl.append(this_bet)
+                    pp_data_nhl.append(this_bet.to_dict())
     if league == 9:
         pp_data_bet_objs = pp_data_bet_objs_nfl
         data_ = data_nfl
     elif league == 7:
         pp_data_bet_objs = pp_data_bet_objs_nba
         data_ = data_nba 
+    elif league == 8:
+        pp_data_bet_objs = pp_data_bet_objs_nhl
+        data_ = data_nhl 
     for prize_pick_bet in pp_data_bet_objs:
         #return prize_pick_bet.player_name 
         if prize_pick_bet.player_name in data_.keys():
@@ -91,7 +110,10 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL
                     final_data_bet_objs_nfl.append(prize_pick_bet)
                 elif league == 7:
                     final_data_nba.append(prize_pick_bet.to_dict_final())
-                    final_data_bet_objs_nba.append(prize_pick_bet)    
+                    final_data_bet_objs_nba.append(prize_pick_bet)   
+                elif league == 8: 
+                    final_data_nhl.append(prize_pick_bet.to_dict_final())
+                    final_data_bet_objs_nhl.append(prize_pick_bet)
     last_updated = datetime.now()
     return jsonify(data)
 
@@ -120,6 +142,19 @@ def get_final_data_nba():
 def get_final_data_bet_objs_nba():
     global final_data_bet_objs_nba
     return final_data_bet_objs_nba
+
+def get_pp_data_nhl():
+    global pp_data_nhl
+    return pp_data_nhl
+def get_pp_data_bet_objs_nhl():
+    global pp_data_bet_objs_nhl
+    return pp_data_bet_objs_nhl
+def get_final_data_nhl():
+    global final_data_nhl
+    return final_data_nhl
+def get_final_data_bet_objs_nhl():
+    global final_data_bet_objs_nhl
+    return final_data_bet_objs_nhl
 
 def get_last_time_updated():
     months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -153,4 +188,14 @@ def reset_nfl_pp():
     pp_data_bet_objs_nfl = []
     final_data_bet_objs_nfl = []
     final_data_nfl = []
+
+def reset_nhl_pp():
+    global pp_data_nhl
+    global pp_data_bet_objs_nhl
+    global final_data_bet_objs_nhl
+    global final_data_nhl
+    pp_data_nhl = []
+    pp_data_bet_objs_nhl = []
+    final_data_bet_objs_nhl = []
+    final_data_nhl = []
     

@@ -1,26 +1,36 @@
-from scrapePrizePicks import get_final_data_bet_objs_nba, get_final_data_bet_objs_nfl
+from scrapePrizePicks import get_final_data_bet_objs_nba, get_final_data_bet_objs_nfl, get_final_data_bet_objs_nhl
 from bet import Bet
 global best_nba
 global best_nfl
+global best_nhl
 global best_bet_obs_nfl
 global best_bet_obs_nba
+global best_bet_obs_nhl
 best_nba = []
 best_bet_objs_nba = []
 best_nfl = []
 best_bet_objs_nfl = []
+best_nhl = []
+best_bet_objs_nhl = []
 def bestBets(league):
     global best_nba
     global best_nfl
+    global best_nhl
     global best_bet_objs_nba
     global best_bet_objs_nfl
+    global best_bet_objs_nhl
     if league == 9:
         bets = get_final_data_bet_objs_nfl()
     elif league == 7:
         bets = get_final_data_bet_objs_nba()
+    elif league == 8:
+        bets = get_final_data_bet_objs_nhl()
     best_nba = []
     best_bet_objs_nba = []
     best_nfl = []
     best_bet_objs_nfl = []
+    best_nhl = []
+    best_bet_objs_nhl = []
 
     for bet in bets:
         if bet.under and abs(bet.under) >= 250: #checks if under is none, and checks if it is too big
@@ -60,10 +70,15 @@ def bestBets(league):
             elif league == 7:
                 best_nba.append(bet.to_dict_final_with_avg())
                 best_bet_objs_nba.append(bet)
+            elif league == 8:
+                best_nhl.append(bet.to_dict_final_with_avg())
+                best_bet_objs_nhl.append(bet)
     if league == 9:
         sorted_best = sorted(best_nfl, key=lambda x: abs(50 - x['Average']), reverse=True)
     elif league == 7:
         sorted_best = sorted(best_nba, key=lambda x: abs(50 - x['Average']), reverse=True)
+    elif league == 8:
+        sorted_best = sorted(best_nhl, key=lambda x: abs(50 - x['Average']), reverse=True)
     return sorted_best
 
         

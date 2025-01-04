@@ -39,6 +39,7 @@ services:
       - SELENIUM_LOCATION=${SELENIUM_LOCATION:-remote_chromedriver}
       - API_KEY=${API_KEY}
       - API_URL_1=${API_URL_1}
+      - API_URL_2=${API_URL_2}
     env_file:
       - ./backend/.env
     ports:

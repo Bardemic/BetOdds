@@ -101,4 +101,11 @@ projection_map = {
     "Steals": "steals",
     "3-PT Made": "fg3PtMade",
     "Turnovers": "turnovers",
+    #NHL
+    "Hits": "hits",
+    "Faceoffs Won": "faceoffWins",
+    "Time On Ice": "NA",
+    "Shots On Goal": "shotsOnGoal",
+    "Points": "points",
+    "Assists": "assists",
 }

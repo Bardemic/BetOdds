@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react';
 const App = () => {
   const [resultNFL, setResultNFL] = useState([]);
   const [resultNBA, setResultNBA] = useState([]);
+  const [resultNHL, setResultNHL] = useState([]);
   const [activeResult, setActiveResult] = useState('NFL');
   const [statTypeNFL, setStatTypeNFL] = useState('passYards');
   const [statTypeNBA, setStatTypeNBA] = useState('pointsAssists');
+  const [statTypeNHL, setStatTypeNHL] = useState('pointsAssists');
   const [time, setTime] = useState('');
 
 
@@ -13,9 +15,11 @@ const App = () => {
     try {
       const response_nfl = await fetch(`${import.meta.env.VITE_BACKEND_URL}/get-best-lines-nfl`);
       const response_nba = await fetch(`${import.meta.env.VITE_BACKEND_URL}/get-best-lines-nba`);
+      const response_nhl = await fetch(`${import.meta.env.VITE_BACKEND_URL}/get-best-lines-nhl`);
       const response_time = await fetch(`${import.meta.env.VITE_BACKEND_URL}/get-last-updated`);
       const dataNFL = await response_nfl.json();
       const dataNBA = await response_nba.json();
+      const dataNHL = await response_nhl.json();
       const response_time_data = await response_time.json();
 
       setTime(response_time_data);
@@ -28,11 +32,17 @@ const App = () => {
         ...item
       }));
 
+      const combinedDataNHL = dataNHL.map(item => ({
+        ...item
+      }));
+
       setResultNFL(combinedDataNFL);
       setResultNBA(combinedDataNBA);
+      setResultNHL(combinedDataNHL);
     } catch (error) {
       setResultNBA('Error: ' + error.message);
       setResultNFL('Error: ' + error.message);
+      setResultNHL('Error: ' + error.message);
     }
   };
 
@@ -47,7 +57,7 @@ const App = () => {
         <h1 className="text-3xl font-bold mb-6 text-gray-800">BetOdds</h1>
         <div className='m-2 flex items-center gap-2'>
           <button
-            onClick={() => (activeResult == "NFL" ? setActiveResult("NBA") : setActiveResult("NFL"))}
+            onClick={() => (activeResult == "NFL" ? setActiveResult("NBA") : activeResult == "NBA" ? setActiveResult("NHL") : setActiveResult("NFL"))}
             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-200"
           >
             {activeResult}
@@ -82,7 +92,7 @@ const App = () => {
             <option value="tacklesAndAssists">Tackles + Ast</option>
             <option value="assists">Ast</option>
             <option value="idk">Sacks (nAn)</option>
-          </select> :
+          </select> : activeResult == "NBA" ?
           <select 
           value={statTypeNBA} 
           onChange={(e) => setStatTypeNBA(e.target.value)}
@@ -100,6 +110,22 @@ const App = () => {
             <option value="steals">Steals</option>
             <option value="fg3PtMade">3-PT Made</option>
             <option value="turnovers">Turnovers</option>
+          </select> : 
+          <select 
+          value={statTypeNHL} 
+          onChange={(e) => setStatTypeNHL(e.target.value)}
+          className="bg-white text-gray-800 font-semibold py-2 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="shotsOnGoal">Shots On Goal</option>
+            <option value="points">Points</option>
+            <option value="goals">Goals</option>
+            <option value="powerplayPoints">PP PTS</option>
+            <option value="assists">Assists</option>
+            <option value="notOnPPrightnow?">Blocked Shots</option>
+            <option value="notOnPPrightnow?">Saves</option>
+            <option value="notOnPPrightnow?">Goals Allowed</option>
+            <option value="hits">Hits</option>
+            <option value="faceoffWins">Faceoff Wins</option>
           </select>
           }
           <p className='text-black'>{time.month} {String(time.day).padStart(2, '0')}, {time.year} at {String(time.hour).padStart(2, '0')}:{String(time.minute).padStart(2, '0')}:{String(time.second).padStart(2, '0')} UTC</p>
@@ -116,8 +142,8 @@ const App = () => {
 
         </div>
         <div className='flex flex-col'>
-          {activeResult ? (activeResult == "NFL" ? resultNFL : resultNBA).map((item, index) => {
-          if(item.projection_type == (activeResult == "NFL" ? statTypeNFL : statTypeNBA)) return ( 
+          {activeResult ? (activeResult == "NFL" ? resultNFL : activeResult == "NBA" ? resultNBA : resultNHL).map((item, index) => {
+          if(item.projection_type == (activeResult == "NFL" ? statTypeNFL : activeResult == "NBA" ? statTypeNBA : statTypeNHL)) return ( 
             <div key={index} className="p-4 bg-white rounded text-black shadow border grid gap-2 grid-cols-8">
               <p>{item.player_name}</p>
               <p>{item.l10}</p>
