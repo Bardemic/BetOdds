@@ -23,6 +23,11 @@ def bestBets(league):
     best_bet_objs_nfl = []
 
     for bet in bets:
+        if bet.under and abs(bet.under) >= 250: #checks if under is none, and checks if it is too big
+            continue
+        if bet.over and abs(bet.over) >= 250: #checks if over is none, and checks if it is too big
+            continue
+
         noneCount = 0
         if bet.l10 == None: noneCount += 1
         if bet.h2h == None: noneCount += 1
