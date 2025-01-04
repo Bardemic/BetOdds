@@ -23,7 +23,7 @@ scheduler.start()
 
         
 
-@scheduler.task('cron', id='do_job_1', minute='0', hour='*')
+@scheduler.task('cron', id='do_job_1', minute='*/15')
 def job1():
     with app.app_context():
         reset_nba_pp()
