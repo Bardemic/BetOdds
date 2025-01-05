@@ -60,6 +60,11 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL, #8 is NHL
     options.add_argument("start-maximized")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--headless")
     
     driver = webdriver.Remote(command_executor=f'http://{selenium_address}:4444/wd/hub', options=options)
     driver.set_page_load_timeout(5)
