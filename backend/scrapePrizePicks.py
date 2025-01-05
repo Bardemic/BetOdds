@@ -64,7 +64,7 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL, #8 is NHL
     options.add_argument("--disable-gpu")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--no-sandbox")
-    options.add_argument("--headless")
+    #options.add_argument("--headless")
     
     driver = webdriver.Remote(command_executor=f'http://{selenium_address}:4444/wd/hub', options=options)
     driver.set_page_load_timeout(5)
