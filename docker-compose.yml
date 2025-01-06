@@ -24,8 +24,8 @@ services:
       - traefik.http.routers.<unique_router_name>.entryPoints=http
     environment:
       - VITE_BACKEND_URL=${VITE_BACKEND_URL:-http://localhost:5001}
-    ports:
-      - "5173:5173"  #uncomment this to run locally, keep commented out if deploying to server (no idea why lowkey)
+    #ports:
+    #  - "5173:5173"  #uncomment this to run locally, keep commented out if deploying to server (no idea why lowkey)
     depends_on:
       - backend
     networks:
