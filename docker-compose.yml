@@ -37,10 +37,10 @@ services:
       dockerfile: Dockerfile
     environment:
       - SELENIUM_LOCATION=${SELENIUM_LOCATION:-remote_chromedriver}
-    #  - API_KEY=${API_KEY}
-     # - API_URL_1=${API_URL_1}
-      #- API_URL_2=${API_URL_2}
-      #- API_URL_3=${API_URL_3}
+      - API_KEY=${API_KEY}
+      - API_URL_1=${API_URL_1}
+      - API_URL_2=${API_URL_2}
+      - API_URL_3=${API_URL_3}
     env_file:
       - ./backend/.env
     ports:
