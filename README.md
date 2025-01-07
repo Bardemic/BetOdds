@@ -9,3 +9,4 @@ Currently using Flask for backend, Vite/React for frontend
 - Improve UI overall, add more information about website
 - Add detailed setup guide
 - Clean up code (it is very ugly since adding NBA stats)
+- Fix UI On Mobile Devices
