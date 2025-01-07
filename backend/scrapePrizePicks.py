@@ -58,8 +58,6 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL, #8 is NHL
 
     options = Options() #using selenium vs request because of Prizepick's restrictions, cannot deploy to a docker with requests (and if you could, my 10 hours of trying wasn't enough smh)
     options.add_argument("start-maximized")
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    options.add_experimental_option('useAutomationExtension', False)
     
     driver = webdriver.Remote(command_executor=f'http://{selenium_address}:4444/wd/hub', options=options)
     driver.set_page_load_timeout(5)
