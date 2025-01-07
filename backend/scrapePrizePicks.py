@@ -66,6 +66,7 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL, #8 is NHL
     driver.get(f"https://api.prizepicks.com/projections?league_id={league}&per_page=250&single_stat=true&in_game=true&state_code=IL&game_mode=pickem")
     while driver.execute_script("return document.readyState") != "complete":
         pass
+    print(json.loads(driver.find_element(By.XPATH, "/html/body").text))
     data = json.loads(driver.find_element(By.XPATH, "/html/body").text)
     driver.quit()
     for bet in data["data"]:
