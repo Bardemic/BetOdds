@@ -3,5 +3,4 @@ requests==2.32.3
 flask-cors==5.0.0
 python-dotenv==1.0.0
 selenium
-selenium-stealth
 Flask-APScheduler

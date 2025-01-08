@@ -7,6 +7,7 @@ from flask import jsonify
 from scrapePropsCash import get_data_nfl, get_data_nba, get_data_nhl
 from bet import Bet
 from datetime import datetime
+from extension import proxies
 
 global pp_data_nfl
 global pp_data_bet_objs_nfl
@@ -55,9 +56,16 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL, #8 is NHL
     data_nhl = get_data_nhl()
 
     selenium_address = os.environ.get('SELENIUM_LOCATION')
+    proxy_user = os.environ.get('PROXY_USER')
+    proxy_pass = os.environ.get('PROXY_PASS')
+    proxy_ip = os.environ.get('PROXY_HOST')
+    proxy_port = os.environ.get('PROXY_PORT')
 
     options = Options() #using selenium vs request because of Prizepick's restrictions, cannot deploy to a docker with requests (and if you could, my 10 hours of trying wasn't enough smh)
     options.add_argument("start-maximized")
+    
+    proxies_extension = proxies(proxy_user,proxy_pass,proxy_port,proxy_ip)
+    options.add_extension(proxies_extension)
     
     driver = webdriver.Remote(command_executor=f'http://{selenium_address}:4444/wd/hub', options=options)
     driver.set_page_load_timeout(5)

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   selenium:
@@ -41,6 +41,10 @@ services:
       - API_URL_1=${API_URL_1}
       - API_URL_2=${API_URL_2}
       - API_URL_3=${API_URL_3}
+      - PROXY_HOST=${PROXY_HOST}
+      - PROXY_PORT=${PROXY_PORT}
+      - PROXY_USER=${PROXY_USER}
+      - PROXY_PASS=${PROXER_PASS}
     env_file:
       - ./backend/.env
     ports:
