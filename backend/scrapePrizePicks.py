@@ -64,7 +64,8 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL, #8 is NHL
     options = Options() #using selenium vs request because of Prizepick's restrictions, cannot deploy to a docker with requests (and if you could, my 10 hours of trying wasn't enough smh)
     options.add_argument("start-maximized")
     
-    proxies_extension = proxies(proxy_user,proxy_pass,proxy_port,proxy_ip)
+    print(f'proxy_user: {proxy_user}, proxy_pass: {proxy_pass}, proxy_ip: {proxy_ip}, proxy_port: {proxy_port}')
+    proxies_extension = proxies(proxy_user, proxy_pass, proxy_ip, proxy_port)
     options.add_extension(proxies_extension)
     
     driver = webdriver.Remote(command_executor=f'http://{selenium_address}:4444/wd/hub', options=options)
@@ -72,6 +73,8 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL, #8 is NHL
     driver.get(f"https://api.prizepicks.com/projections?league_id={league}&per_page=250&single_stat=true&in_game=true&state_code=IL&game_mode=pickem")
     while driver.execute_script("return document.readyState") != "complete":
         pass
+    if driver.find_element(By.XPATH, "/html/body") is None:
+        return "error, nothing found"
     print(json.loads(driver.find_element(By.XPATH, "/html/body").text))
     data = json.loads(driver.find_element(By.XPATH, "/html/body").text)
     driver.quit()
