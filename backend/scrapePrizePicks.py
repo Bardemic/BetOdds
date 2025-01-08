@@ -8,6 +8,8 @@ from scrapePropsCash import get_data_nfl, get_data_nba, get_data_nhl
 from bet import Bet
 from datetime import datetime
 from extension import proxies
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 global pp_data_nfl
 global pp_data_bet_objs_nfl
@@ -68,11 +70,15 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL, #8 is NHL
     proxies_extension = proxies(proxy_user, proxy_pass, proxy_ip, proxy_port)
     options.add_extension(proxies_extension)
     
+    
     driver = webdriver.Remote(command_executor=f'http://{selenium_address}:4444/wd/hub', options=options)
     driver.set_page_load_timeout(5)
     driver.get(f"https://api.prizepicks.com/projections?league_id={league}&per_page=250&single_stat=true&in_game=true&state_code=IL&game_mode=pickem")
     while driver.execute_script("return document.readyState") != "complete":
         pass
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located(By.XPATH, "/html/body")
+    )
     if driver.find_element(By.XPATH, "/html/body") is None:
         return "error, nothing found"
     print(json.loads(driver.find_element(By.XPATH, "/html/body").text))
