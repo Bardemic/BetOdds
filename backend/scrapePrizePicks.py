@@ -77,7 +77,7 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL, #8 is NHL
     while driver.execute_script("return document.readyState") != "complete":
         pass
     WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located(By.XPATH, "/html/body")
+        EC.presence_of_element_located((By.XPATH,"/html/body"))
     )
     if driver.find_element(By.XPATH, "/html/body") is None:
         return "error, nothing found"
