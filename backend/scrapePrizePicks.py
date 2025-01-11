@@ -10,6 +10,7 @@ from datetime import datetime
 from extension import proxies
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import random 
 
 global pp_data_nfl
 global pp_data_bet_objs_nfl
@@ -58,16 +59,23 @@ def prizepicks_api_fetch(league): #7 is NBA, #9 is NFL, #8 is NHL
     data_nhl = get_data_nhl()
 
     selenium_address = os.environ.get('SELENIUM_LOCATION')
-    proxy_user = os.environ.get('PROXY_USER')
-    proxy_pass = os.environ.get('PROXY_PASS')
-    proxy_ip = os.environ.get('PROXY_HOST')
-    proxy_port = os.environ.get('PROXY_PORT')
+    proxy_users = os.environ.get('PROXY_USER')
+    proxy_passwords = os.environ.get('PROXY_PASS')
+    proxy_ips = os.environ.get('PROXY_HOST')
+    proxy_ports= os.environ.get('PROXY_PORT')
+
+    proxy_users = proxy_users.split('-')
+    proxy_passwords = proxy_passwords.split('-')
+    proxy_ips = proxy_ips.split('-')
+    proxy_ports = proxy_ports.split('-')
+
+    selector = random.randint(0, len(proxy_ports) - 1)
 
     options = Options() #using selenium vs request because of Prizepick's restrictions, cannot deploy to a docker with requests (and if you could, my 10 hours of trying wasn't enough smh)
     options.add_argument("start-maximized")
     
-    print(f'proxy_user: {proxy_user}, proxy_pass: {proxy_pass}, proxy_ip: {proxy_ip}, proxy_port: {proxy_port}')
-    proxies_extension = proxies(proxy_user, proxy_pass, proxy_ip, proxy_port)
+    print(f'proxy_user: {proxy_users[selector]}, proxy_pass: {proxy_passwords[selector]}, proxy_ip: {proxy_ips}, proxy_port: {proxy_ports[selector]}')
+    proxies_extension = proxies(proxy_users[selector], proxy_passwords[selector], proxy_ips[selector], proxy_ports[selector])
     options.add_extension(proxies_extension)
     
     
